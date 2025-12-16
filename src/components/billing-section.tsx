@@ -6,7 +6,7 @@ import type { BillItem } from "@/app/page";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Minus, Plus, Trash2, Printer } from "lucide-react";
+import { Minus, Plus, Trash2, Printer, Check, ChevronsUpDown } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -21,7 +21,6 @@ import html2canvas from "html2canvas";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Label } from "./ui/label";
 
 interface BillingSectionProps {
   items: BillItem[];
@@ -33,7 +32,7 @@ interface BillingSectionProps {
 
 const GST_RATE = 0.05; // 5%
 
-export function BillingSection({ items, onUpdateQuantity, onClearBill, activeTable, onSetActiveTable }: BillingSectionProps) {
+export function BillingSection({ items, onUpdateQuantity, onClearBill, activeTable }: BillingSectionProps) {
   const [customerName, setCustomerName] = useState("");
   const [billNumber, setBillNumber] = useState("");
   const [billDate, setBillDate] = useState("");
@@ -91,17 +90,7 @@ export function BillingSection({ items, onUpdateQuantity, onClearBill, activeTab
     <Card className="sticky top-20 shadow-lg">
       <CardHeader>
         <CardTitle className="font-headline text-xl flex justify-between items-center">
-          <span>Current Bill</span>
-          <div className="flex items-center gap-2">
-            <Label htmlFor="table-number" className="text-sm font-medium">Table No:</Label>
-            <Input 
-              id="table-number"
-              type="text" 
-              value={activeTable}
-              onChange={(e) => onSetActiveTable(e.target.value)}
-              className="w-20 h-8"
-            />
-          </div>
+          <span>Table {activeTable} Bill</span>
         </CardTitle>
       </CardHeader>
       <CardContent>

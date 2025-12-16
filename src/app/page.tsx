@@ -6,12 +6,15 @@ import type { MenuItem } from "@/lib/menu-items";
 import { MenuSection } from "@/components/menu-section";
 import { BillingSection } from "@/components/billing-section";
 import { UtensilsCrossed } from "lucide-react";
+import { TableLayout } from "@/components/table-layout";
 
 export type BillItem = MenuItem & { quantity: number };
 
 export type Bills = {
   [table: string]: BillItem[];
 };
+
+const TOTAL_TABLES = Array.from({ length: 8 }, (_, i) => (i + 1).toString());
 
 export default function Home() {
   const [bills, setBills] = useState<Bills>({});
@@ -65,6 +68,8 @@ export default function Home() {
      });
   }
 
+  const billedTables = Object.keys(bills);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b">
@@ -85,7 +90,13 @@ export default function Home() {
 
       <main className="container mx-auto p-4 sm:p-6 lg:p-8">
         <div className="grid lg:grid-cols-5 gap-8 items-start">
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 space-y-8">
+             <TableLayout
+              tables={TOTAL_TABLES}
+              activeTable={activeTable}
+              billedTables={billedTables}
+              onSelectTable={setActiveTable}
+            />
             <MenuSection onAddItem={addToBill} />
           </div>
           <div className="lg:col-span-2">
